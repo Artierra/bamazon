@@ -1,3 +1,5 @@
 ```
-bamazon.js;
+node_modules
+.DS_Store
+bamazon.js
 ```
