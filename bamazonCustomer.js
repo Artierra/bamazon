@@ -29,18 +29,20 @@ var connection = mysql.createConnection({
 // connect to the mysql server and sql database
 connection.connect(function (err) {
     if (err) throw err;
+    console.log("connected as id " + connection.threadId);
     // run the start function after the connection is made to prompt the user
-    startSearch();
+    ProductInfo();
 })
 
-// var startSearch = function () {
-//     //check connection
-//     console.log('connection made');
-//     // run the start function after the connection is made to prompt the user
-//     startSearch();
-// };
-// function which prompts the user for what action they should take
-function startSearch() {
+function ProductInfo() {
+    connection.query("SELECT * FROM products", function (err, res) {
+        if (err) throw err;
+        console.log(res);
+        connection.end();
+    });
+}
+
+function promptUser() {
 
     inquirer
         .prompt({
