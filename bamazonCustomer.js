@@ -38,27 +38,44 @@ function ProductInfo() {
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err;
         console.log(res);
-        connection.end();
+        askforInput();;
     });
 }
+// The app should then prompt users with two messages.
+//     * The first should ask them the ID of the product they would
+// like to buy.* The second message should ask how many units of the
+// product they would like to buy.
 
-function promptUser() {
-
+var askforInput = function () {
     inquirer
-        .prompt({
-            name: "productID",
-            type: "input",
-            message: "What is the product you would like to submit?",
-            validate: function (value) {
-                if (isNaN(value) === false) {
-                    return true;
+        .prompt([{
+                name: "productID",
+                type: "input",
+                message: "What is the ID of the product you would like to buy?",
+                validate: function (value) {
+                    if (isNaN(value) === false) {
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
+            },
+            {
+                name: "stockQuantity",
+                type: "input",
+                message: "How many lbs would like to buy?",
+                validate: function (value) {
+                    if (isNaN(value) === false) {
+                        return true;
+                    }
+                    return false;
+                }
             }
-        })
+        ])
+
+
 
         .then(function (userinput) {
             console.log(userinput.productID);
+            console.log(userinput.stockQuantity);
         });
-
-};
+}
