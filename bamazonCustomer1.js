@@ -72,7 +72,7 @@ var askforInput = function () {
                 } else {
                     inquirer
                         .prompt({
-                            name: "purchase",
+                            name: "stockAvailable",
                             type: "input",
                             message: "How many lbs would like to buy?",
                             validate: function (value) {
@@ -83,9 +83,7 @@ var askforInput = function () {
                             }
                         })
                         .then(function (userInput2) {
-                            var purchase = userInput2.purchase;
-                            var newStockQuantity = res[0].stock_quantity - purchase;
-
+                            var purchase = userInput2.stockAvailable;
                             if (purchase > res[0].stock_quantity) {
                                 console.log("Sorry we only have " + res[0].stock_quantity + " lbs left");
                                 askforInput();
@@ -93,12 +91,13 @@ var askforInput = function () {
                                 console.log("-------------------------------------");
                                 console.log(purchase + " lbs of " + res[0].product_name + " at $" + res[0].price +
                                     " for a total of $" + purchase * res[0].price);
-                                console.log("There are only " + newStockQuantity + " lbs left");
 
+                                var newStockQuantity = res[0].stock_quantity - purchase;
+                                console.log("There are only " + newStockQuantity + "lbs left");
                                 connection.query("UPDATE products SET stock_quantity = ? WHERE item_id = ? ",
                                     newStockQuantity,
                                     res[0].item_id,
-                                    function (err, res) {
+                                    function (err) {
                                         if (err) throw err;
                                         console.log("Thank you for your purchase");
                                         console.log("Your order has been processed");
@@ -106,7 +105,7 @@ var askforInput = function () {
                                     }
 
                                 );
-                            }
+                            };
                         });
                 };
 
