@@ -72,7 +72,7 @@ var askforInput = function () {
                 } else {
                     inquirer
                         .prompt({
-                            name: "stockQuantity",
+                            name: "stockAvailable",
                             type: "input",
                             message: "How many lbs would like to buy?",
                             validate: function (value) {
@@ -83,11 +83,14 @@ var askforInput = function () {
                             }
                         })
                         .then(function (userInput2) {
-                            var stockQuantity = userInput2.stockQuantity;
-                            if (stockQuantity > res[0].stock_quantity) {
+                            var stockAvailable = userInput2.stockAvailable;
+                            if (stockAvailable > res[0].stock_quantity) {
                                 console.log("Sorry we only have " + res[0].stock_quantity + " lbs left")
                                 askforInput();
                             } else {
+                                console.log("-------------------------------------");
+                                console.log(stockAvailable + " lbs of" + res[0].product_name + " at $" + res[0].price +
+                                    " for a total of $" + stockAvailable * res[0].price);
 
                             }
                         })
