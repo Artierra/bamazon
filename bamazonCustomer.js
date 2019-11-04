@@ -78,8 +78,9 @@ var askforInput = function () {
                             validate: function (value) {
                                 if (isNaN(value) === false) {
                                     return true;
+                                } else {
+                                    return false;
                                 }
-                                return false;
                             }
                         })
                         .then(function (userInput2) {
@@ -95,9 +96,11 @@ var askforInput = function () {
                                     " for a total of $" + purchase * res[0].price);
                                 console.log("There are only " + newStockQuantity + " lbs left");
 
+
                                 connection.query("UPDATE products SET stock_quantity = ? WHERE item_id = ? ",
-                                    newStockQuantity,
-                                    res[0].item_id,
+                                    [newStockQuantity,
+                                        res[0].item_id
+                                    ],
                                     function (err, res) {
                                         if (err) throw err;
                                         console.log("Thank you for your purchase");
@@ -113,3 +116,15 @@ var askforInput = function () {
             });
         });
 }
+// TypeError: this._callback.apply is not a function
+//     at Query.Sequence.end(/Users/monicabongue / Desktop / BC / assignments / bamazon / node_modules / mysql / lib / protocol / sequences / Sequence.js: 83: 24)
+// at Query.ErrorPacket(/Users/monicabongue / Desktop / BC / assignments / bamazon / node_modules / mysql / lib / protocol / sequences / Query.js: 90: 8)
+// at Protocol._parsePacket(/Users/monicabongue / Desktop / BC / assignments / bamazon / node_modules / mysql / lib / protocol / Protocol.js: 291: 23)
+// at Parser._parsePacket(/Users/monicabongue / Desktop / BC / assignments / bamazon / node_modules / mysql / lib / protocol / Parser.js: 433: 10)
+// at Parser.write(/Users/monicabongue / Desktop / BC / assignments / bamazon / node_modules / mysql / lib / protocol / Parser.js: 43: 10)
+// at Protocol.write(/Users/monicabongue / Desktop / BC / assignments / bamazon / node_modules / mysql / lib / protocol / Protocol.js: 38: 16)
+// at Socket.<anonymous>(/Users/monicabongue / Desktop / BC / assignments / bamazon / node_modules / mysql / lib / Connection.js: 91: 28)
+// at Socket.<anonymous>(/Users/monicabongue / Desktop / BC / assignments / bamazon / node_modules / mysql / lib / Connection.js: 525: 10)
+// at Socket.emit(events.js: 198: 13)
+// at addChunk(_stream_readable.js: 288: 12)
+// Monicas - MacBook - Pro: bamazon monicabongue$ 
