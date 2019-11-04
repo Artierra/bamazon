@@ -38,6 +38,12 @@ function ProductInfo() {
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err;
         console.log(res);
+        console.log('----------------------------------------------------------------------------------------------------')
+
+        for (var i = 0; i < res.length; i++) {
+            console.log("ID: " + res[i].item_id + " | " + "Product: " + res[i].product_name + " | " + "Stock Quantity: " + res[i].stock_quantity + " | " + "Price: " + res[i].price + " | ");
+            console.log('--------------------------------------------------------------------------------------------------')
+        }
         askforInput();;
     });
 }
